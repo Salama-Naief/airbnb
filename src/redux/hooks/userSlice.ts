@@ -3,27 +3,17 @@ import { SafeUser } from "../../types";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../Store";
 
-// Define a type for the slice state
-interface UserState {
-  user: {
-    name: string;
-    email: string;
-    role: string;
-    brithDate?: string;
-    address?: string;
-    phoneNumber?: string;
-  } | null;
-}
-
 // Define the initial state using that type
-const initialState: SafeUser | null = null;
+const initialState: { user: SafeUser | null } = {
+  user: null,
+};
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     login: (state, action: PayloadAction<SafeUser>) => {
-      state = action.payload;
+      state.user = action.payload;
     },
     logout: (state) => {
       state.user = null;
