@@ -3,13 +3,31 @@ import React from "react";
 import ListingClient from "./ListingClient";
 import getCurrentUser from "@/app/actions/getCurrent";
 import getReservations from "@/app/actions/getReservation";
-import ListingSkeleton from "@/skeletons/ListingSkeleton";
 import { notFound } from "next/navigation";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface IParams {
   listingId: string;
   userId?: string;
   autherId?: string;
+}
+
+type Props = {
+  params: IParams;
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+
+  // fetch data
+  const listingData: any = await getListingById({ params });
+
+  return {
+    title: listingData.status === "error" ? "Error" : listingData.listing.title,
+  };
 }
 const Listing = async ({ params }: { params: IParams }) => {
   const listingData: any = await getListingById({ params });

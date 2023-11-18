@@ -37,6 +37,9 @@ const RentModal = () => {
   const rent = useAppSelector((state) => state.rent);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [guestCount, setGuestCounte] = useState<number>(1);
+  const [roomCount, setRoomCount] = useState<number>(1);
+  const [bathroomCount, setBathroomCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState(STEPS.CATEGORY);
 
@@ -150,6 +153,15 @@ const RentModal = () => {
     return "Back";
   }, [currentStep]);
 
+  const setDecrease = (val: number, setValue: Function) => {
+    if (val <= 1) return;
+    setValue(val - 1);
+  };
+
+  const setIncrease = (val: number, setValue: Function) => {
+    setValue(val + 1);
+  };
+
   let bodyContent = (
     <div className="flex flex-col gap-8">
       <Heading
@@ -213,10 +225,14 @@ const RentModal = () => {
             subTitle="How many guests do you allow?"
             value={rent.guestCount}
             onDecrease={() =>
-              addRentCounters({ name: "guestCount", type: "decrease" })
+              dispatch(
+                addRentCounters({ name: "guestCount", type: "decrease" })
+              )
             }
             onIncrease={() =>
-              addRentCounters({ name: "guestCount", type: "increase" })
+              dispatch(
+                addRentCounters({ name: "guestCount", type: "increase" })
+              )
             }
           />
           <hr />
@@ -225,10 +241,10 @@ const RentModal = () => {
             subTitle="How many rooms do you have?"
             value={rent.roomCount}
             onDecrease={() =>
-              addRentCounters({ name: "roomCount", type: "decrease" })
+              dispatch(addRentCounters({ name: "roomCount", type: "decrease" }))
             }
             onIncrease={() =>
-              addRentCounters({ name: "roomCount", type: "increase" })
+              dispatch(addRentCounters({ name: "roomCount", type: "increase" }))
             }
           />
           <hr />
@@ -237,10 +253,14 @@ const RentModal = () => {
             subTitle="How many bathrooms do you have?"
             value={rent.bathroomCount}
             onDecrease={() =>
-              addRentCounters({ name: "bathroomCount", type: "decrease" })
+              dispatch(
+                addRentCounters({ name: "bathroomCount", type: "decrease" })
+              )
             }
             onIncrease={() =>
-              addRentCounters({ name: "bathroomCount", type: "increase" })
+              dispatch(
+                addRentCounters({ name: "bathroomCount", type: "increase" })
+              )
             }
           />
         </div>

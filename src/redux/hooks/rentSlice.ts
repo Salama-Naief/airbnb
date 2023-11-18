@@ -39,6 +39,7 @@ export const userSlice = createSlice({
       state.location = action.payload;
     },
     addRentCounters: (state, action: PayloadAction<CoutersProps>) => {
+      console.log("sdfdssd", action.payload);
       state[action.payload.name] =
         action.payload.type === "decrease"
           ? state[action.payload.name] - 1
